@@ -40,9 +40,47 @@ Price for trip in Texas state with the distance 210 km will cost 400$
 
 //!!!!!----  Brute force Solution -----!!!!!!
 
+// let travelCostList = [
+//   { state: "AL", mileage: 200, cost: 300 },
+//   { state: "AL", mileage: 150, cost: 200 },
+//   { state: "AL", mileage: 300, cost: 400 },
+//   { state: "AZ", mileage: 300, cost: 400 },
+// ];
+
+// let sortedList = travelCostList.sort(function (a, b) {
+//   if (a.mileage > b.mileage) {
+//     return 1;
+//   } else {
+//     return -1;
+//   }
+// });
+
+// let stateToValue = new Map();
+// for (let i = 0; i < sortedList.length; i++) {
+//   if (!stateToValue.has(sortedList[i].state)) {
+//     stateToValue.set(sortedList[i].state, []);
+//   }
+//   stateToValue.get(sortedList[i].state).push(sortedList[i]);
+// }
+
+// let cost = 0;
+
+// function calculateCost(state, mileage) {
+//   let temp = stateToValue.get(state);
+
+//   for (let i = 0; i < temp.length; i++) {
+//     if (temp[i].mileage >= mileage) {
+//       cost = temp[i].cost;
+//       return cost;
+//     }
+//   }
+// }
+
+//!!!!!----  Binary search Solution -----!!!!!!
+
 let travelCostList = [
-  { state: "AL", mileage: 200, cost: 300 },
   { state: "AL", mileage: 150, cost: 200 },
+  { state: "AL", mileage: 200, cost: 300 },
   { state: "AL", mileage: 300, cost: 400 },
   { state: "AZ", mileage: 300, cost: 400 },
 ];
@@ -63,17 +101,27 @@ for (let i = 0; i < sortedList.length; i++) {
   stateToValue.get(sortedList[i].state).push(sortedList[i]);
 }
 
-let cost = 0;
-
 function calculateCost(state, mileage) {
-  let temp = stateToValue.get(state);
+  let arrList = stateToValue.get(state);
+  let start = 0,
+    end = arrList.length - 1;
 
-  for (let i = 0; i < temp.length; i++) {
-    if (temp[i].mileage >= mileage) {
-      cost = temp[i].cost;
-      return cost;
+  while (start <= end) {
+    if (mileage < 0 || mileage > arrList[end].mileage) return null;
+    let mid = Math.floor((start + end) / 2);
+
+    if (0 <= mileage && mileage <= arrList[0].mileage) {
+      return arrList[0].cost;
+    }
+
+    if (arrList[mid - 1].mileage < mileage && mileage <= arrList[mid].mileage) {
+      return arrList[mid].cost;
+    } else if (arrList[mid].mileage < mileage) {
+      start = mid + 1;
+    } else {
+      end = mid - 1;
     }
   }
 }
 
-console.log(calculateCost("AL", 160));
+console.log(calculateCost("AL", 201));
