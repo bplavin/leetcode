@@ -20,30 +20,12 @@
  * @return {number}
  */
 
-var maxArea = function (h, w, horizontalCuts, verticalCuts) {
-  let maxH = 0;
-  let maxW = 0;
-
-  horizontalCuts.sort();
-  verticalCuts.sort();
-
-  maxH = getMaxLength(h, horizontalCuts);
-  maxW = getMaxLength(w, verticalCuts);
-
-  return (maxH * maxW) % 1000000007;
+var maxArea = function (h, w, hc, vc) {
+  hc.sort((a, b) => a - b);
+  vc.sort((a, b) => a - b);
+  let maxh = Math.max(hc[0], h - hc[hc.length - 1]),
+    maxv = Math.max(vc[0], w - vc[vc.length - 1]);
+  for (let i = 1; i < hc.length; i++) maxh = Math.max(maxh, hc[i] - hc[i - 1]);
+  for (let i = 1; i < vc.length; i++) maxv = Math.max(maxv, vc[i] - vc[i - 1]);
+  return (BigInt(maxh) * BigInt(maxv)) % 1000000007n;
 };
-
-function getMaxLength(maxLength, cuts) {
-  let result;
-  let first = Math.abs(0 - cuts[0]);
-  let last = Math.abs(maxLength - cuts[cuts.length - 1]);
-
-  for (let i = 0; i < cuts.length - 1; i++) {
-    let temp = Math.abs(cuts[i] - cuts[i + 1]);
-    result = Math.max(first, last, temp);
-  }
-
-  return result;
-}
-
-console.log(5, 4, [1, 2, 4], [1, 3]);
