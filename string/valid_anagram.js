@@ -22,16 +22,32 @@
  * @param {string} t
  * @return {boolean}
  */
+
+// Log(n) solution:
+
+// var isAnagram = function (s, t) {
+//   if (s.length !== t.length) return false;
+
+//   let k = s.split("").sort().join("");
+//   let l = t.split("").sort().join("");
+
+//   for (let i = 0; i < k.length; i++) {
+//     if (k[i] !== l[i]) return false;
+//   }
+//   return true;
+// };
+
 var isAnagram = function (s, t) {
-  if (s.length !== t.length) return false;
-
-  let k = s.split("").sort().join("");
-  let l = t.split("").sort().join("");
-
-  for (let i = 0; i < k.length; i++) {
-    if (k[i] !== l[i]) return false;
+  if (t.length !== s.length) return false;
+  const counts = {};
+  for (let c of s) {
+    counts[c] = (counts[c] || 0) + 1;
+  }
+  for (let c of t) {
+    if (!counts[c]) return false;
+    counts[c]--;
   }
   return true;
 };
 
-console.log(isAnagram("rat", "car"));
+console.log(isAnagram("anagram", "nagaram"));
