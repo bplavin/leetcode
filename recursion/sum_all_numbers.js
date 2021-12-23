@@ -74,3 +74,48 @@
 
 // Write a function printList(list) that outputs list items one-by-one.
 // Make two variants of the solution: using a loop and using recursion.
+
+// function printList(list) {
+//   while(list) {
+//     alert(list.val);
+//     list = list.next;
+//   }
+// }
+
+// function printList(list) {
+
+//     alert(list.value); // output the current item
+
+//     if (list.next) {
+//       printList(list.next); // do the same for the rest of the list
+//     }
+
+//   }
+
+//   printList(list);
+
+//Output a single-linked list from the previous task Output a single-linked list in the reverse order.
+
+let list = {
+  value: 1,
+  next: {
+    value: 2,
+    next: {
+      value: 3,
+      next: {
+        value: 4,
+        next: null,
+      },
+    },
+  },
+};
+
+function printReverseList(list) {
+  if (list.next) {
+    printReverseList(list.next);
+  }
+
+  alert(list.value);
+}
+
+console.log(printReverseList(list));
