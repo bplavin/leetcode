@@ -96,7 +96,7 @@
 
 //Output a single-linked list from the previous task Output a single-linked list in the reverse order.
 
-let list = {
+let head = {
   value: 1,
   next: {
     value: 2,
@@ -110,12 +110,14 @@ let list = {
   },
 };
 
-function printReverseList(list) {
-  if (list.next) {
-    printReverseList(list.next);
+function reverseList(head) {
+  if (!head || !head.next) {
+    return head;
   }
-
-  alert(list.value);
+  var newHead = reverseList(head.next);
+  head.next.next = head;
+  head.next = null;
+  return newHead;
 }
 
-console.log(printReverseList(list));
+console.log(reverseList(head));
