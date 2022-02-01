@@ -17,10 +17,10 @@ let dfs = (node) => {
   return min;
 };
 
-let root = new TreeNode(5);
+let root = new TreeNode(1);
 root.left = new TreeNode(2);
 root.right = new TreeNode(3);
 root.left.left = new TreeNode(4);
-root.left.right = new TreeNode(1);
+root.left.right = new TreeNode(5);
 
 console.log(dfs(root));

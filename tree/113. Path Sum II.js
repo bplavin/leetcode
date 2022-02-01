@@ -41,13 +41,30 @@ class TreeNode {
   }
 }
 
-var pathSum = function (root, targetSum) {};
+var pathSum = function (node, targetSum) {
+  let results = [];
+
+  dfs(node, targetSum, 0, [], results);
+
+  return results;
+};
 
 let dfs = (node, targetSum, sum, rootToLeaf, results) => {
-  if (node == null && targetSum == sum) return rootToLeaf;
-  sum += node;
-  rootToLeaf.push(node);
-  dfs(node.left, targetSum, sum, rootToLeaf, results);
+  if (!node) return;
+
+  //Add each value to the shallow arr and sum
+  sum += node.val;
+  rootToLeaf.push(node.val);
+  //check if node is a leaf
+  if (!node.left && !node.right) {
+    if (sum == targetSum) {
+      results.push([...rootToLeaf]);
+    }
+  } else {
+    dfs(node.left, targetSum, sum, rootToLeaf, results);
+    dfs(node.right, targetSum, sum, rootToLeaf, results);
+  }
+  rootToLeaf.pop();
 };
 
 let root = new TreeNode(5);
@@ -61,4 +78,4 @@ root.right.right = new TreeNode(4);
 root.right.right.left = new TreeNode(5);
 root.right.right.right = new TreeNode(1);
 
-console.log(dfs(root, 22, 0, [], []));
+console.log(pathSum(root, 22));
